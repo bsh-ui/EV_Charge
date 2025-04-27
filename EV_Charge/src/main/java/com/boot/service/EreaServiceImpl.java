@@ -25,8 +25,10 @@ public class EreaServiceImpl implements EreaService {
 	}
 
 	@Override
-	public ArrayList<EreaDTO> select_erea_city() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<EreaDTO> select_erea_city(String param) {
+		EreaDAO dao = sqlSession.getMapper(EreaDAO.class);
+		ArrayList<EreaDTO> erea_province_list = dao.select_erea_city(param);
+		return erea_province_list;
 	}
+
 }

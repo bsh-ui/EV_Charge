@@ -72,4 +72,16 @@ public class MemberController {
 		}
 	}
 
+	// '시'
+	@RequestMapping("/province_of_city")
+	@ResponseBody
+	public ArrayList<EreaDTO> province_of_city(@RequestParam("user_province") String param) {
+		log.info("province_of_city");
+		log.info("@# param =>" + param);
+		ArrayList<EreaDTO> cites = ereaService.select_erea_city(param);
+		log.info("" + cites);
+
+		return cites;
+	}
+
 }

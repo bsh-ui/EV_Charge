@@ -77,10 +77,14 @@
 				<td>
 					<!-- 충전소 위치 테이블에서 도 컬럼만 가져오기 -->
 					<select name="user_province" id="user_province">
+							<option value="select" selected>지역선택</option>
 						<c:forEach var="province" items="${erea_province_list}">
 							<option value="${province.erea_province}">${province.erea_province}</option>
 						</c:forEach>
 					</select>
+				</td>
+				<td>
+					<button id="province_select_cancel">지역선택 초기화</button>
 				</td>
 			</tr>
 			<tr height="30">
@@ -90,6 +94,7 @@
 				<td>
 					<!-- 충전소 위치 테이블에서 도에 맞는 시 컬럼만 가져오기 -->
 					<select name="user_city" id="user_city">
+						<option value=''>지역먼저 선택해주세요</option>
 					</select>
 				</td>
 			</tr>
@@ -198,20 +203,22 @@
 		});
 
 		// 사는 지역 선택 옵션
-		$("#user_province").on("chage", function () {
-			var province = $(this).val(); // 선택한값 가져오기
+		$("#user_province").on("change", function () {
+			console.log("선택함");
+			var province = $(this).val();
+			console.log(province);
 
-			if(province){
+			if (province) {
 				$.ajax({
-					 type:"get"
-					,url:"province_chage"
-					,data:{user_province: province}
-					,success: function(response) {
-						// 기존 시 옵션 지우기
+					 type: "get"
+					,url: "province_of_city"
+					,data: { user_province: province }
+					,success: function(cites) {
+						console.log("@# cites => " + cites);
 						$("#user_city").empty().append("<option value=''>시 선택</option>");
 
-						$.each(response.cities, function(index, city) {
-							$("#user_city").append("<option value='" + city + "'>" + city + "</option>");
+						$.each(cites, function(index, city) {
+							$("#user_city").append("<option value='" + city.erea_city + "'>" + city.erea_city + "</option>");
 						});
 					}
 					,error: function() {
@@ -219,8 +226,16 @@
 					}
 				});
 			} else {
-            $("#user_city").empty().append("<option value=''>시 선택</option>");
-        }
+				$("#user_city").empty().append("<option value=''>시 선택</option>");
+			}
 		});
+
+		// 지역선택 초기화 버튼
+		$("#province_select_cancel").on("click", function (e) {
+			e.preventDefault();
+			$("#user_province").find("option[value='select']").prop("selected", true);
+			$("#user_city").empty().append("<option value=''>지역먼저 선택해주세요</option>");
+		});
+
 	});
 </script>
