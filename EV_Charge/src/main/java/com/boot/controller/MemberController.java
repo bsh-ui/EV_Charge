@@ -52,7 +52,7 @@ public class MemberController {
 	// 아이디 중복체크
 	@RequestMapping("/user_id_check")
 	@ResponseBody
-	public String userIdCheck(@RequestParam("user_id") String id) {
+	public String user_id_check(@RequestParam("user_id") String id) {
 		int count = memberService.user_id_check(id);
 		if (count == 0) {
 			return "ok";
