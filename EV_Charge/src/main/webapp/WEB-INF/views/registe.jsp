@@ -77,8 +77,8 @@
 				<td>
 					<!-- 충전소 위치 테이블에서 도 컬럼만 가져오기 -->
 					<select name="user_province" id="user_province">
-						<c:forEach begin="" end="">
-							<option></option>
+						<c:forEach var="province" items="${erea_province_list}">
+							<option value="${province.erea_province}">${province.erea_province}</option>
 						</c:forEach>
 					</select>
 				</td>
@@ -90,9 +90,6 @@
 				<td>
 					<!-- 충전소 위치 테이블에서 도에 맞는 시 컬럼만 가져오기 -->
 					<select name="user_city" id="user_city">
-						<c:forEach begin="" end="">
-							<option></option>
-						</c:forEach>
 					</select>
 				</td>
 			</tr>

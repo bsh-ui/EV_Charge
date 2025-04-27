@@ -1,13 +1,17 @@
 package com.boot.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.boot.dto.EreaDTO;
+import com.boot.service.EreaService;
 import com.boot.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +22,9 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
+	@Autowired
+	private EreaService ereaService;
+
 	// main.jsp
 	@RequestMapping("/main")
 	public String main() {
@@ -27,8 +34,12 @@ public class MemberController {
 
 	// regist.jsp
 	@RequestMapping("/registe")
-	public String registe() {
+	public String registe(Model model) {
 		log.info("registe");
+
+		ArrayList<EreaDTO> erea_province_list = ereaService.select_erea_province();
+		model.addAttribute("erea_province_list", erea_province_list);
+
 		return "registe";
 	}
 
